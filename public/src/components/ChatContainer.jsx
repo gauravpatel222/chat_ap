@@ -7,14 +7,14 @@ import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Video from "./Video";
+
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [isVideoCallActive, setIsVideoCallActive] = useState(false);
-  const videoRef = useRef();
+  
+
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
@@ -63,7 +63,7 @@ export default function ChatContainer({ currentChat, socket }) {
         toast.info('New message received!', { autoClose: 2000 });
       });
     }
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
@@ -73,17 +73,7 @@ export default function ChatContainer({ currentChat, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Function to start the video call
-  const startVideoCall = () => {
-    setIsVideoCallActive(true);
-    // Implement logic to initiate video call using WebRTC
-  };
-
-  // Function to end the video call
-  const endVideoCall = () => {
-    setIsVideoCallActive(false);
-    // Implement logic to end video call
-  };
+ 
 
   return (
     <Container>
@@ -101,13 +91,7 @@ export default function ChatContainer({ currentChat, socket }) {
           </div>
         </div>
         <Logout />
-        <div className="video-call-buttons">
-          {isVideoCallActive ? (
-            <button onClick={endVideoCall}>End Video Call</button>
-          ) : (
-            <button onClick={startVideoCall}>Start Video Call</button>
-          )}
-        </div>
+      
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
@@ -127,12 +111,7 @@ export default function ChatContainer({ currentChat, socket }) {
         })}
       </div>
       <ChatInput handleSendMsg={handleSendMsg} />
-      {isVideoCallActive && (
-        <VideoContainer>
-          <Video/>
-          
-        </VideoContainer>
-      )}
+    
     </Container>
   );
 }
@@ -247,11 +226,4 @@ const Container = styled.div`
   }
 `;
 
-const VideoContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 1rem;
-  border: 2px solid #fff;
-  border-radius: 10px;
-`;
+

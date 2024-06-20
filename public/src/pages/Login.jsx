@@ -21,15 +21,8 @@ export default function Login() {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
     }
-    let a=[1,2,3];
-   let b= a.map((x)=>{
-      console.log(x);
-      return x+1;
-    })
-    a.forEach((x)=>{
-          console.log(x);
-    })
-  }, []);
+   
+  }, [navigate]);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
