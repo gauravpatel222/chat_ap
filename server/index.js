@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect("mongodb+srv://gauravgurjar8791:Gaurav2021@cluster0.pqye42o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
 
   })
   .then(() => {
